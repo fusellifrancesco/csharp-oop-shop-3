@@ -1,4 +1,5 @@
-﻿using System;
+﻿using csharp_oop_shop_3.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,10 +12,13 @@ namespace csharp_oop_shop_3 {
         private string sorgente;
         private double contenutoMaxBottiglia = 1.5;
 
-        public Acqua(string nome, string descrizione, double prezzo, double IVA, string sorgente, double contenutoBottiglia, double contenutoMaxBottiglia) : base(nome, descrizione, prezzo, IVA) {
+        public Acqua(string nome, string descrizione, double prezzo, double IVA, string sorgente, double contenutoBottiglia) : base(nome, descrizione, prezzo, IVA) {
             this.sorgente = sorgente;
-            this.contenutoBottiglia = contenutoBottiglia;
-            this.contenutoMaxBottiglia = contenutoMaxBottiglia;
+            if (contenutoBottiglia > this.contenutoMaxBottiglia) {
+                throw new ContenutoBottMaggioreException("Il contenuto della bottiglia non puo superare: " + this.contenutoMaxBottiglia + " L");
+            } else {
+                this.contenutoBottiglia = contenutoBottiglia;
+            }
         }
 
         // GETTERS
@@ -38,7 +42,7 @@ namespace csharp_oop_shop_3 {
                 this.contenutoBottiglia = contenutoBottiglia;
             } else {
                 this.contenutoBottiglia = GetContenutoMaxBottiglia();
-                Console.WriteLine("Ti si è rovesciata l'acqua per terra!");
+                throw new ContenutoBottMaggioreException("Si è rovesciata dell'acqua per terra");
             }
         }
 
@@ -50,7 +54,7 @@ namespace csharp_oop_shop_3 {
                 this.contenutoBottiglia = acquaRimasta;
             } else {
                 this.contenutoBottiglia = 0;
-                Console.WriteLine("Hai finito l'acqua!");
+                throw new AcquaTerminataException("Hai terminato l'acqua");
             }
         }
 
@@ -59,7 +63,7 @@ namespace csharp_oop_shop_3 {
                 this.contenutoBottiglia = litri;
             } else {
                 this.contenutoBottiglia = GetContenutoMaxBottiglia();
-                Console.WriteLine("Ti si è rovesciata l'acqua per terra!");
+                throw new ContenutoBottMaggioreException("Si è rovesciata dell'acqua per terra");
             }
         }
 

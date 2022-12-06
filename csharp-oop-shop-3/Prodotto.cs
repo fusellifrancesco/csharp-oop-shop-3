@@ -1,4 +1,5 @@
-﻿using System;
+﻿using csharp_oop_shop_3.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,13 +12,23 @@ namespace csharp_oop_shop_3 {
         private string descrizione;
         private double prezzo;
         private double IVA;
+        public static int numeroProdotti = 0;
 
         public Prodotto(string nome, string descrizione, double prezzo, double IVA) {
             this.codice = GeneraCodice();
-            this.nome = nome;
+            if (nome == "") {
+                throw new NomeVuotoException("La stringa del nome non può essere vuota");
+            } else {
+                this.nome = nome;
+            }
             this.descrizione = descrizione;
-            this.prezzo = Math.Round(prezzo, 2);
+            if (prezzo < 0) {
+                throw new PrezzoNegativoException("Il prezzo di un prodotto non può essere negativo");
+            } else {
+                this.prezzo = Math.Round(prezzo, 2);
+            }
             this.IVA = IVA;
+            numeroProdotti++;
         }
 
         // GETTERS
@@ -59,7 +70,11 @@ namespace csharp_oop_shop_3 {
         // SETTERS
 
         public void SetNome(string nome) {
-            this.nome = nome;
+            if (nome == "") {
+                throw new NomeVuotoException("La stringa del nome non può essere vuota");
+            } else {
+                this.nome = nome;
+            }
         }
 
         public void SetDescrizione(string descrizione) {
@@ -67,7 +82,11 @@ namespace csharp_oop_shop_3 {
         }
 
         public void SetPrezzo(double prezzo) {
-            this.prezzo = prezzo;
+            if (prezzo < 0) {
+                throw new PrezzoNegativoException("Il prezzo di un prodotto non può essere negativo");
+            } else {
+                this.prezzo = Math.Round(prezzo, 2);
+            }
         }
 
         public void SetIVA(double IVA) {
