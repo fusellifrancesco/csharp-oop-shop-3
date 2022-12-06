@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace csharp_oop_shop_3 {
         private double contenutoBottiglia;
         private string sorgente;
         private double contenutoMaxBottiglia = 1.5;
+        public const double gallone = 3.785;
 
         public Acqua(string nome, string descrizione, double prezzo, double IVA, string sorgente, double contenutoBottiglia) : base(nome, descrizione, prezzo, IVA) {
             this.sorgente = sorgente;
@@ -79,6 +81,14 @@ namespace csharp_oop_shop_3 {
             Console.WriteLine();
         }
 
-
+        public static double ConvertitoreLitriGalloni(double litri) {
+            if (litri < 0) {
+                throw new LitriNegativiException("I litri non possono essere negativi");
+            } else {
+                double Galloni = litri * gallone;
+                Console.WriteLine(litri + " L = " + Galloni + " Galloni");
+                return Galloni;
+            }
+        }
     }
 }
